@@ -234,7 +234,7 @@ class Refresh extends CI_Controller {
 
 					} else {
 						$sp_feed = new SimplePie();
-						$sp_feed->set_feed_url(convert_to_ascii($fed->fed_link));
+						$sp_feed->set_feed_url(convert_to_ascii(htmlspecialchars_decode($fed->fed_link)));
 						$sp_feed->enable_cache(false);
 						$sp_feed->set_timeout(5);
 						$sp_feed->force_feed(true);
@@ -256,7 +256,7 @@ class Refresh extends CI_Controller {
 
 							$this->db->set('fed_title', $sp_feed->get_title());
 							$this->db->set('fed_url', $sp_feed->get_link());
-							$this->db->set('fed_link', $sp_feed->subscribe_url());
+							$this->db->set('fed_link', htmlspecialchars_decode($sp_feed->subscribe_url()));
 							if(isset($parse_url['host']) == 1) {
 								$this->db->set('fed_host', $parse_url['host']);
 							}
